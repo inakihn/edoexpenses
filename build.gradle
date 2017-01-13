@@ -9,12 +9,19 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
 jar {
 	baseName = 'edoexpenses'
 	version  = '0.1.0'
+	manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version,
+                   'Main-Class': 'edoexpenses.Application'
+    }
+	
 }
 
 repositories {
@@ -23,6 +30,9 @@ repositories {
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+	compile("org.thymeleaf:thymeleaf-spring4")
+	compile("com.h2database:h2")
 }
 
 task wrapper(type: Wrapper) {

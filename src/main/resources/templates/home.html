@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Spring Boot Contacts</title>
+    <title>Spring Boot Expenses</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
   </head>
 
   <body>
-    <h2>Spring Boot Contacts</h2>
+    <h2>Expenses</h2>
     <form method="POST">
-      <label for="firstName">First Name:</label>
-      <input type="text" name="firstName"></input><br/>
-      <label for="lastName">Last Name:</label>
-      <input type="text" name="lastName"></input><br/>
-      <label for="phoneNumber">Phone #:</label>
-      <input type="text" name="phoneNumber"></input><br/>
-      <label for="emailAddress">Email:</label>
-      <input type="text" name="emailAddress"></input><br/>
+      <label for="user">User:</label>
+      <input type="text" name="user"></input><br/>
+      <label for="description">Description:</label>
+      <input type="text" name="description"></input><br/>
+      <label for="value">Value:</label>
+      <input type="text" name="value"></input><br/>
+      <label for="date">Date:</label>
+      <input type="text" name="date"></input><br/>
       <input type="submit"></input>
     </form>
 
-    <ul th:each="contact : ${contacts}">
+    <ul th:each="expense : ${expenses}">
       <li>
-        <span th:text="${contact.firstName}">First</span>
-        <span th:text="${contact.lastName}">Last</span> :
-        <span th:text="${contact.phoneNumber}">phoneNumber</span>,
-        <span th:text="${contact.emailAddress}">emailAddress</span>
+        <span th:text="${expense.user}">User</span>
+        <span th:text="${expense.description}">Description</span> :
+        <span th:text="${expense.value}">Value</span>,
+        <span th:text="${expense.date}">Date</span>
       </li>
     </ul>
   </body>
