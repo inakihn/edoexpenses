@@ -22,7 +22,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense findById(int id) {
+	public Expense findById(Integer id) {
 		return expenseRepository.findOne(id);
 	}
 

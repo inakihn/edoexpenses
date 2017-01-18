@@ -8,7 +8,7 @@ public interface ExpenseService {
 
 	List<Expense> findAll();
 
-	Expense findById(int id);
+	Expense findById(Integer id);
 
 	Expense createExpense(Expense expense);
 
