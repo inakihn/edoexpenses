@@ -2,7 +2,7 @@
 An MVC application to create, edit and list expenses.
 
 ## Synopsis
-This web application was created as an exercise to test my knowledge in AngularJS and Spring boot. By no means is a final product. It uses an in-memory h2 database in the backed
+This web application was created as an exercise to test my knowledge in AngularJS and Spring boot. By no means is a final product. It uses an in-memory h2 database in the backend.
 
 
 ## Running the application
@@ -16,4 +16,4 @@ After succesful spring boot loading, go to your internet browser and access the 
 http://localhost:8080
 ```
 
-Feel free to test at your own will, as the data is saved in memory and will be reset every time you restart the application.
+Feel free to play with the application at your own will, as the data is saved in memory and will be reset every time you restart the application.
