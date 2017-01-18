@@ -7,9 +7,13 @@ This web application was created as an exercise to test my knowledge in AngularJ
 
 ## Running the application
 To run the application, place yourself in the directory where you downloaded the project and execute:
+```
 ./gradlew bootRun
+```
 
 After succesful spring boot loading, go to your internet browser and access the page:
+```
 http://localhost:8080
+```
 
 Feel free to test at your own will, as the data is saved in memory and will be reset every time you restart the application.
