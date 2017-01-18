@@ -91,6 +91,7 @@ App.controller('edoexpensesController', function($scope, Expense) {
 
   function setEditedExpense(expense) {
     $scope.editedExpense = angular.copy(expense);
+    $scope.editedExpense.date = new Date(expense.date);
   }
   $scope.setEditedExpense = setEditedExpense;
   

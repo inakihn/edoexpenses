@@ -23,7 +23,6 @@ public class Expense {
 	private String description;
 	private Double value;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 
 	public Integer getId() {
@@ -54,10 +53,11 @@ public class Expense {
 		return date;
 	}
 
-	public void setDate(String date) throws ParseException {
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		this.date = formatter.parse(date);
+	public void setDate(Date date) throws ParseException {
+//		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+//		this.date = formatter.parse(date);
+		this.date = date;
 	}
 	
 	
