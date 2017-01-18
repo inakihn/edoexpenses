@@ -10,34 +10,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edoexpenses.model.Expense;
-import edoexpenses.repository.ExpenseRepository;
+import edoexpenses.service.ExpenseService;
 
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {
 	
   @Autowired
-  private ExpenseRepository expenseRepository;
+  private ExpenseService expenseService;
   
   @RequestMapping(method = RequestMethod.GET)
   public List<Expense> findExpenses() {
-    return expenseRepository.findAll();
+    return expenseService.findAll();
   }
   
   @RequestMapping(method = RequestMethod.POST)
-  public Expense addExpense(@RequestBody Expense item) {
-    item.setId(null);
-    return expenseRepository.saveAndFlush(item);
+  public Expense addExpense(@RequestBody Expense expense) {
+	  return expenseService.createExpense(expense);
   }
   
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public Expense updateExpense(@RequestBody Expense updatedExpense, @PathVariable Integer id) {
-    updatedExpense.setId(id);
-    return expenseRepository.saveAndFlush(updatedExpense);
+  public Expense updateExpense(@RequestBody Expense expense, @PathVariable Integer id) {
+	  return expenseService.updateExpense(expense, id);
   }
   
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   public void deleteExpense(@PathVariable Integer id) {
-    expenseRepository.delete(id);
+	  expenseService.deleteExpenseById(id);
   }
 }
