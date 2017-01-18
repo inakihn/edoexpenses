@@ -1,0 +1,4 @@
+/* Snnipet for cloak to work if angular loading is not in the head of html*/
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none;
+}

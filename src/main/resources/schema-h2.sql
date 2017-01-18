@@ -1,0 +1,9 @@
+DROP TABLE expenses IF EXISTS;
+
+CREATE TABLE expenses (
+	id INTEGER IDENTITY PRIMARY KEY,
+	description VARCHAR(30) NOT NULL,
+	value NUMBER(10,4) NOT NULL,
+	date DATE DEFAULT (sysdate)
+);
+
