@@ -22,8 +22,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense findById(long id) {
-		return null;
+	public Expense findById(int id) {
+		return expenseRepository.findOne(id);
 	}
 
 	@Override

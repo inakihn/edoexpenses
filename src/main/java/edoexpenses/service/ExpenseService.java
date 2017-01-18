@@ -8,12 +8,13 @@ public interface ExpenseService {
 
 	List<Expense> findAll();
 
-	Expense findById(long id);
+	Expense findById(int id);
 
 	Expense createExpense(Expense expense);
 
 	Expense updateExpense(Expense expense, Integer id);
 
 	void deleteExpenseById(int id);
+
 
 }
