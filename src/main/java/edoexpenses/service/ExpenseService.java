@@ -14,7 +14,9 @@ public interface ExpenseService {
 
 	Expense updateExpense(Expense expense, Integer id);
 
-	void deleteExpenseById(int id);
+	void deleteExpenseById(Integer id);
+
+	void deleteAllExpenses();
 
 
 }

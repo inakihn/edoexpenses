@@ -1,1 +1,1 @@
-var App = angular.module('edoexpensesApp', ['ngResource']);
+var App = angular.module('edoexpensesApp', ['ngResource','ngMessages', 'ngAnimate']);
