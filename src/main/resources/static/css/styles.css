@@ -2,3 +2,9 @@
 [ng\:cloak], [ng-cloak], .ng-cloak {
     display: none;
 }
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+  margin-left: 4px;
+}

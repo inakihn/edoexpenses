@@ -26,7 +26,7 @@ App.controller('edoexpensesController', function($scope, Expense) {
     }).$save(function(expense) {
       $scope.expenses.push(expense);
     });
-    $scope.newExpense = "";
+    $scope.newExpense = [];
     cancelCreating();
   };
 
@@ -45,7 +45,8 @@ App.controller('edoexpensesController', function($scope, Expense) {
     $scope.editedExpense = null;
     $scope.isEditing = false;
   };
-
+  
+  
   // --------------------------------------------------------------
   // WINDOW STATE MANAGEMENT
   // --------------------------------------------------------------
@@ -54,7 +55,10 @@ App.controller('edoexpensesController', function($scope, Expense) {
   $scope.isCreating = false;
   $scope.isEditing = false;
 
+
   function startCreating() {
+	$scope.newExpense = [];
+	$scope.newExpense.date = new Date();
     $scope.isCreating = true;
     $scope.isEditing = false;
   }
@@ -91,6 +95,8 @@ App.controller('edoexpensesController', function($scope, Expense) {
 
   function setEditedExpense(expense) {
     $scope.editedExpense = angular.copy(expense);
+    $scope.editedExpense.date = new Date(expense.date);
+    $scope.selectedExpense = angular.copy(expense);
   }
   $scope.setEditedExpense = setEditedExpense;
   

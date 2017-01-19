@@ -1,17 +1,12 @@
 package edoexpenses.model;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Expense {
@@ -23,7 +18,6 @@ public class Expense {
 	private String description;
 	private Double value;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 
 	public Integer getId() {
@@ -54,10 +48,8 @@ public class Expense {
 		return date;
 	}
 
-	public void setDate(String date) throws ParseException {
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		this.date = formatter.parse(date);
+	public void setDate(Date date) throws ParseException {
+		this.date = date;
 	}
 	
 	

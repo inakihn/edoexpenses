@@ -7,6 +7,7 @@
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
       crossorigin="anonymous" />
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
   </head>
   <body ng-app="edoexpensesApp" class="ng-cloak">
     <div class="container" ng-controller="edoexpensesController as ctrl">
@@ -30,33 +31,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-class="{'info':isSelectedExpense(expense.id)}" ng-repeat="expense in expenses">
+            <tr class="animate-repeat" ng-class="{'info':isSelectedExpense(expense.id)}" ng-repeat="expense in expenses">
               <td>
                 <dl>{{expense.description}}</dl>
               </td>
-              <td>{{expense.value}}</td>
-              <td>{{expense.date}}</td>
+              <td>{{expense.value}} &euro;</td>
+              <td>{{expense.date | date:'dd/MM/yyyy'}}</td>
               <td class="text-right">
                 <button type="button" class="btn btn-success " ng-click="setEditedExpense(expense);startEditing();">
-                <span class="glyphicon glyphicon-pencil"></span>
+                	<span class="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button class="btn btn-danger" type="button" title="Delete" ng-click="deleteExpense(expense)">
-                <span class="glyphicon glyphicon-trash"></span>
+                	<span class="glyphicon glyphicon-trash"></span>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <!-- CREATING -->
-      <div ng-if="shouldShowCreating()">
-        <div ng-if="!isCreating">
-          <button type="button" class="btn btn-link pull-right" ng-click="startCreating();">
-          <span class="glyphicon glyphicon-plus"></span>
-          Add a new expense
+      <!-- CREATING FORM -->
+      <div ng-if="shouldShowCreating()" >
+        <div ng-if="!isCreating" >
+          <button type="button" class="btn btn-primary pull-right" ng-click="startCreating();">
+	          <span class="glyphicon glyphicon-plus"></span>
+	          Add a new expense
           </button>
         </div>
-        <div ng-if="isCreating">
+        <div ng-if="isCreating" class="animate-if">
           <div class="panel panel-default">
             <div class="panel-heading"><span class="lead">ADDING A NEW EXPENSE </span>
               <button type="button" class="btn close pull-right" ng-click="cancelCreating()">
@@ -64,31 +65,37 @@
               </button>
             </div>
             <div class="panel-body">
-              <form class="form-horizontal" ng-submit="addExpense(newExpense)">
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="description">Description:</label>
+              <form class="form-horizontal" name="createForm" ng-submit="addExpense(newExpense)" novalidate>
+                <div class="form-group required" ng-class="{ 'has-error has-feedback': createForm.newDescription.$touched && createForm.newDescription.$invalid}">
+                  <label class="control-label col-sm-2" for="newDescription">Description</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="description" 
-                      ng-model="newExpense.description" placeholder="Expense description">
+                    <input type="text" class="form-control" id="newDescription" name="newDescription"
+                      ng-model="newExpense.description" placeholder="Expense description" required>
+                       <div ng-messages="createForm.newDescription.$error" ng-show="createForm.newDescription.$touched">
+					        <div ng-message="required">Required Field.</div>
+					    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="value">Value:</label>
+                <div class="form-group required" ng-class="{ 'has-error has-feedback': createForm.newValue.$touched && createForm.newValue.$invalid}">
+                  <label class="control-label col-sm-2" for="newValue">Value</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="value"
-                      ng-model="newExpense.value" placeholder="0.01" step="0.01" lang="en">
+                    <input type="number" class="form-control" id="newValue" name="newValue"
+                      ng-model="newExpense.value" placeholder="0.01" step="0.01" lang="en" required>
+                        <div ng-messages="createForm.newValue.$error" ng-show="createForm.newValue.$touched">
+					        <div ng-message="required">Required Field.</div>
+					    </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="date">Date:</label>
+                <div class="form-group required" ng-class="{ 'has-error has-feedback': createForm.newDate.$touched && createForm.newDate.$invalid}">
+                  <label class="control-label col-sm-2" for="newDate">Date</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="date"
-                      ng-model="newExpense.date" placeholder="01/01/2017">
+                    <input type="date" class="form-control" id="newDate" name="newDate"
+                      ng-model="newExpense.date" required>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-8">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default" ng-disabled="createForm.$invalid">Submit</button>
                     <button type="button" class="btn btn-default" ng-click="cancelCreating()">Cancel</button>
                   </div>
                 </div>
@@ -97,40 +104,46 @@
           </div>
         </div>
       </div>
-      <!-- EDITING -->
-      <div ng-if="shouldShowEditing()">
+      <!-- EDITING FORM -->
+      <div ng-if="shouldShowEditing()" class="animate-if">
         <div class="panel panel-default">
-          <div class="panel-heading"><span class="lead">Editing {{editedExpense.description}} </span>
+          <div class="panel-heading"><span class="lead">Editing "{{selectedExpense.description}}" </span>
             <button type="button" class="btn close pull-right" ng-click="cancelEditing()">
             <span class="glyphicon glyphicon-remove"></span>
             </button>
           </div>
           <div class="panel-body">
-            <form class="form-horizontal" ng-submit="updateExpense(editedExpense)">
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="description">Description:</label>
+            <form class="form-horizontal" name="editForm" ng-submit="updateExpense(editedExpense)" novalidate>
+              <div class="form-group required" ng-class="{ 'has-error has-feedback': editForm.editDescription.$touched && editForm.editDescription.$invalid}">
+                <label class="control-label col-sm-2" for="editDescription">Description:</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" id="description" 
-                    ng-model="editedExpense.description" placeholder="Expense description">
+                  <input type="text" class="form-control" id="editDescription" name="editDescription"
+                    ng-model="editedExpense.description" required>
+                   <div ng-messages="editForm.editDescription.$error" ng-show="editForm.editDescription.$touched">
+					        <div ng-message="required">Required Field.</div>
+					    </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group required" ng-class="{ 'has-error has-feedback': editForm.editValue.$touched && editForm.editValue.$invalid}">
                 <label class="control-label col-sm-2" for="value">Value:</label>
                 <div class="col-sm-8">
-                  <input type="number" class="form-control" id="value"
-                    ng-model="editedExpense.value" placeholder="0.01" step="0.01">
+                  <input type="number" class="form-control" id="editValue" name="editValue"
+                    ng-model="editedExpense.value" step="0.01" required>
+                  <div ng-messages="editForm.editValue.$error" ng-show="editForm.editValue.$touched">
+					        <div ng-message="required">Required Field.</div>
+					    </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group required" ng-class="{ 'has-error has-feedback': editForm.editDate.$touched && editForm.editDate.$invalid}">
                 <label class="control-label col-sm-2" for="date">Date:</label>
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" id="date"
-                    ng-model="editedExpense.date" placeholder="01/01/2017">
+                  <input type="date" class="form-control" id="editDate" name="editDate"
+                    ng-model="editedExpense.date" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-8">
-                  <button type="submit" class="btn btn-default">Submit</button>
+                  <button type="submit" class="btn btn-default" ng-disabled="editForm.$invalid">Submit</button>
                   <button type="button" class="btn btn-default" ng-click="cancelEditing()">Cancel</button>
                 </div>
               </div>
@@ -140,8 +153,10 @@
       </div>
     </div>
   </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/service/expenses_service.js"></script>

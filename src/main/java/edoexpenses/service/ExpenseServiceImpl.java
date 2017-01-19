@@ -22,8 +22,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense findById(long id) {
-		return null;
+	public Expense findById(Integer id) {
+		return expenseRepository.findOne(id);
 	}
 
 	@Override
@@ -39,8 +39,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void deleteExpenseById(int id) {
+	public void deleteExpenseById(Integer id) {
 		expenseRepository.delete(id);
+	}
+	
+	@Override
+	public void deleteAllExpenses() {
+		expenseRepository.deleteAll();
 	}
 
 }
